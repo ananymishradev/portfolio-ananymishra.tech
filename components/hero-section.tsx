@@ -8,32 +8,32 @@ import { ArrowRight } from "lucide-react"
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex">
+    <section className="relative min-h-[100svh] overflow-hidden bg-foreground lg:grid lg:grid-cols-[22%_1fr]">
       {/* Left content - 20% */}
-      <div className="hidden lg:flex bg-foreground items-center justify-center w-[22%]">
+      <div className="hidden items-center justify-center bg-foreground lg:flex">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
           className="text-background -rotate-90 whitespace-nowrap"
         >
-          <span className="text-xs tracking-[0.3em] uppercase">Autumn / Winter 2026</span>
+          <span className="text-xs tracking-[0.3em] uppercase">Signature Sleep Sale 2026</span>
         </motion.div>
       </div>
 
       {/* Right content - 80% */}
-      <div className="flex-1 relative">
+      <div className="relative min-h-[100svh]">
         {/* Background image - converted to Next.js Image with priority for LCP */}
         <div className="absolute inset-0">
           <Image
             src="/heromat.jpg"
-            alt="Elegant fashion model in dark clothing"
+            alt="sukoon Mattresses"
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 78vw"
-            className="object-cover"
+            className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-foreground/20" />
+          <div className="absolute inset-0 bg-foreground/10" />
         </div>
 
         {/* Content overlay */}
@@ -45,12 +45,12 @@ export function HeroSection() {
             className="max-w-2xl"
           >
             <h1 className="font-serif text-4xl md:text-5xl lg:text-7xl text-background leading-[1.1] mb-6 text-balance">
-              The Art of
+              Comfort So Deep,
               <br />
-              Quiet Luxury
+              You'll Forgot The World
             </h1>
             <p className="text-background/80 text-base lg:text-lg tracking-wide mb-10 max-w-md leading-relaxed">
-              Timeless pieces crafted with intention. Where heritage meets modern refinement.
+              Experience the ultimate in sleep comfort with our signature collection.
             </p>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link href="/shop">
@@ -58,7 +58,7 @@ export function HeroSection() {
                   size="lg"
                   className="bg-background text-foreground hover:bg-background/90 px-10 py-6 text-sm tracking-[0.2em] uppercase group"
                 >
-                  Discover Collection
+                  Discover Comfort
                   <ArrowRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
