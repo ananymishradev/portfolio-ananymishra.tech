@@ -10,7 +10,10 @@ import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import { mdxComponents } from "@/components/mdx-components"
 
-const BLOG_DIR = path.join(process.cwd(), "content", "blog")
+const BLOG_DIRS = [
+  path.join(process.cwd(), "data", "blog"),
+  path.join(process.cwd(), "content", "blog"),
+]
 
 export type BlogFrontmatter = {
   title: string
@@ -51,11 +54,34 @@ const mdxOptions = {
   ],
 }
 
-const normalizeFrontmatter = (raw: Partial<BlogFrontmatter>): BlogFrontmatter => {
+const listBlogEntries = async (dir: string) => {
+  try {
+    await fs.access(dir)
+    return await fs.readdir(dir)
+  } catch {
+    return [] as string[]
+  }
+}
+
+const extractFirstHeading = (source: string) => {
+  const lines = source.split("\n")
+  const headingLine = lines.find((line) => line.trim().startsWith("# "))
+  if (!headingLine) return null
+  return headingLine.replace(/^#\s+/, "").trim() || null
+}
+
+const removeFirstH1 = (source: string) => {
+  return source.replace(/^#\s+.+\n+/, "")
+}
+
+const normalizeFrontmatter = (
+  raw: Partial<BlogFrontmatter>,
+  fallback: { title: string; description: string; date: string },
+): BlogFrontmatter => {
   return {
-    title: raw.title ?? "Untitled post",
-    description: raw.description ?? "",
-    date: raw.date ?? new Date().toISOString(),
+    title: raw.title ?? fallback.title,
+    description: raw.description ?? fallback.description,
+    date: raw.date ?? fallback.date,
     published: raw.published ?? true,
     author: raw.author ?? "Anany Mishra",
     tags: raw.tags ?? [],
@@ -65,25 +91,42 @@ const normalizeFrontmatter = (raw: Partial<BlogFrontmatter>): BlogFrontmatter =>
 
 export async function getAllPostsMeta(): Promise<BlogPostMeta[]> {
   try {
-    const entries = await fs.readdir(BLOG_DIR)
+    const allEntries = await Promise.all(BLOG_DIRS.map((dir) => listBlogEntries(dir)))
+
+    const mdxFiles = Array.from(new Set(allEntries.flat().filter((entry) => entry.endsWith(".mdx"))))
 
     const posts = await Promise.all(
-      entries
-        .filter((entry) => entry.endsWith(".mdx"))
-        .map(async (entry) => {
-          const fullPath = path.join(BLOG_DIR, entry)
-          const source = await fs.readFile(fullPath, "utf8")
-          const { data } = matter(source)
-          const frontmatter = normalizeFrontmatter(data as Partial<BlogFrontmatter>)
+      mdxFiles.map(async (entry) => {
+        const slug = entry.replace(/\.mdx$/, "")
 
-          return {
-            slug: entry.replace(/\.mdx$/, ""),
-            ...frontmatter,
+        for (const dir of BLOG_DIRS) {
+          const fullPath = path.join(dir, entry)
+
+          try {
+            const source = await fs.readFile(fullPath, "utf8")
+            const { data } = matter(source)
+            const derivedTitle = extractFirstHeading(source) ?? slug.replace(/[-_]/g, " ")
+            const frontmatter = normalizeFrontmatter(data as Partial<BlogFrontmatter>, {
+              title: derivedTitle,
+              description: `Read ${derivedTitle}.`,
+              date: new Date().toISOString(),
+            })
+
+            return {
+              slug,
+              ...frontmatter,
+            }
+          } catch {
+            continue
           }
-        }),
+        }
+
+        return null
+      }),
     )
 
     return posts
+      .filter((post): post is BlogPostMeta => post !== null)
       .filter((post) => post.published)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   } catch {
@@ -92,27 +135,38 @@ export async function getAllPostsMeta(): Promise<BlogPostMeta[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<CompiledBlogPost | null> {
-  const fullPath = path.join(BLOG_DIR, `${slug}.mdx`)
+  for (const dir of BLOG_DIRS) {
+    const fullPath = path.join(dir, `${slug}.mdx`)
 
-  try {
-    const source = await fs.readFile(fullPath, "utf8")
-    const { content, data } = matter(source)
-    const frontmatter = normalizeFrontmatter(data as Partial<BlogFrontmatter>)
+    try {
+      const source = await fs.readFile(fullPath, "utf8")
+      const { content, data } = matter(source)
+      const derivedTitle = extractFirstHeading(source) ?? slug.replace(/[-_]/g, " ")
+      const shouldTrimFirstHeading = !data.title && Boolean(extractFirstHeading(content))
+      const normalizedContent = shouldTrimFirstHeading ? removeFirstH1(content) : content
+      const frontmatter = normalizeFrontmatter(data as Partial<BlogFrontmatter>, {
+        title: derivedTitle,
+        description: `Read ${derivedTitle}.`,
+        date: new Date().toISOString(),
+      })
 
-    const compiled = await compileMDX({
-      source: content,
-      options: {
-        mdxOptions,
-      },
-      components: mdxComponents,
-    })
+      const compiled = await compileMDX({
+        source: normalizedContent,
+        options: {
+          mdxOptions,
+        },
+        components: mdxComponents,
+      })
 
-    return {
-      slug,
-      frontmatter,
-      content: compiled.content,
+      return {
+        slug,
+        frontmatter,
+        content: compiled.content,
+      }
+    } catch {
+      continue
     }
-  } catch {
-    return null
   }
+
+  return null
 }
