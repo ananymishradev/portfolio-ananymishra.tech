@@ -4,7 +4,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
-import Video from 'next-video';
+import BackgroundVideo from "next-video/background-video"
 import bgVideo from "../videos/light-bg.mp4";
   
 export function HeroSection() {
@@ -13,17 +13,17 @@ export function HeroSection() {
       {/* Right content - 80% */}
       <div className="relative min-h-[100svh]">
         {/* Background image - converted to Next.js Image with priority for LCP */}
-        <div className="absolute inset-0">
-          <Video
+        <div className="absolute inset-0 pointer-events-none">
+          <BackgroundVideo
             src={bgVideo}
             sizes="(max-width: 1024px) 100vw, 78vw"
-            autoPlay
             muted
             loop
             playsInline
             controls={false}
             preload="auto"
-            className="absolute inset-0 h-full w-full object-cover object-center"
+            className="absolute inset-0 !h-full !w-full !aspect-auto object-cover object-center"
+            aria-hidden="true"
           />
           <div className="absolute inset-0 bg-foreground/10" />
         </div>
