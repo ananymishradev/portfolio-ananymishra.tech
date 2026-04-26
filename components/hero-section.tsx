@@ -1,37 +1,29 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
-
+import Video from 'next-video';
+import bgVideo from "../videos/light-bg.mp4";
+  
 export function HeroSection() {
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-foreground lg:grid lg:grid-cols-[22%_1fr]">
-      {/* Left content - 20% */}
-      <div className="hidden items-center justify-center bg-foreground lg:flex">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="text-background -rotate-90 whitespace-nowrap"
-        >
-          <span className="text-xs tracking-[0.3em] uppercase">Signature Sleep Sale 2026</span>
-        </motion.div>
-      </div>
-
+    <section className="relative min-h-[100svh] overflow-hidden bg-foreground">
       {/* Right content - 80% */}
       <div className="relative min-h-[100svh]">
         {/* Background image - converted to Next.js Image with priority for LCP */}
         <div className="absolute inset-0">
-          <Image
-            src="/heromat.jpg"
-            alt="sukoon Mattresses"
-            fill
-            priority
+          <Video
+            src={bgVideo}
             sizes="(max-width: 1024px) 100vw, 78vw"
-            className="object-cover object-center"
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls={false}
+            preload="auto"
+            className="absolute inset-0 h-full w-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-foreground/10" />
         </div>

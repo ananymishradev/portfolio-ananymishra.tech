@@ -57,9 +57,9 @@ export function Navigation() {
   }, [isSearchOpen])
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/shop", label: "Shop" },
-    { href: "/heritage", label: "Heritage" },
+    { href: "/", label: "About" },
+    { href: "/Blogs", label: "Blogs" },
+    { href: "/Contact", label: "Contact" },
   ]
 
   const navItemColor = isScrolled ? "text-foreground" : "text-white"
@@ -107,7 +107,7 @@ export function Navigation() {
               href="/"
               className="absolute left-1/2 -translate-x-1/2 font-serif text-xl lg:text-2xl tracking-[0.3em] uppercase text-foreground"
             >
-              Maison
+              Sukoon
             </Link>
 
             {/* Right icons */}

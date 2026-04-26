@@ -55,7 +55,7 @@ const products = [
   },
 ]
 
-export function CollectionGrid() {
+export function BlogGrid() {
   return (
     <section className="py-24 lg:py-32 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
