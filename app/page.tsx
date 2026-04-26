@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
 import { BlogGrid } from "@/components/blog-grid"
+import { Footer } from "@/components/footer"
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Navigation />
       <HeroSection />
       <BlogGrid />
+      <Footer />
     </main>
   )
 }

@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, Inter, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { SmoothScrollProvider } from "@/components/smooth-scroll-provider"
+import { siteConfig } from "@/lib/site-config"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -17,9 +18,34 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "MAISON | Luxury Essentials",
-  description: "Timeless elegance, modern refinement. Discover our curated collection of luxury essentials.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: siteConfig.titleTemplate,
+  },
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.authorName, url: siteConfig.authorWebsite }],
+  creator: siteConfig.authorName,
   generator: "v0.app",
+  openGraph: {
+    type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [{ url: siteConfig.ogImage }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+  },
+  robots: {
+    index: siteConfig.robotsIndex,
+    follow: siteConfig.robotsFollow,
+  },
   icons: {
     icon: [
       {
@@ -45,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang={siteConfig.language} className={`${inter.variable} ${playfair.variable}`}>
       <body className={`font-sans antialiased`}>
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
         <Analytics />

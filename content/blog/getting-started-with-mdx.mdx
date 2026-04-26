@@ -1,0 +1,58 @@
+---
+title: "Getting Started With MDX in This Blog"
+description: "How this blog handles Markdown + JSX, math equations, highlighted code, and embedded media."
+date: "2026-04-26"
+author: "Anany Mishra"
+tags:
+  - MDX
+  - Next.js
+  - LaTeX
+  - SEO
+published: true
+coverImage: "/og-image.png"
+---
+
+This post demonstrates the built-in MDX rendering mechanism.
+
+## Why MDX
+
+MDX combines Markdown with JSX, so you can write expressive technical articles and still embed components when needed.
+
+## LaTeX Support
+
+Inline math works like this: $E = mc^2$.
+
+Block equations work too:
+
+$$
+\mathrm{softmax}(z_i)=\frac{e^{z_i}}{\sum_{j=1}^{K}e^{z_j}}
+$$
+
+## Code Highlighting
+
+```ts
+export function costPerToken(totalCostUsd: number, tokens: number) {
+  if (tokens <= 0) return 0
+  return totalCostUsd / tokens
+}
+
+console.log(costPerToken(12.5, 250000))
+```
+
+## Embedded Image
+
+![Developer portrait example](/developer-portrait.png)
+
+## Lists, Links, and Tables
+
+- GitHub profile: [ananymishradev](https://github.com/ananymishradev)
+- LinkedIn profile: [ananymishradev](https://www.linkedin.com/in/ananymishradev/)
+
+| Feature | Status |
+| --- | --- |
+| MDX rendering | Enabled |
+| KaTeX math | Enabled |
+| Code highlighting | Enabled |
+| SEO metadata | Enabled |
+
+You can add new files in `content/blog/*.mdx` and they will automatically appear in the blog index.

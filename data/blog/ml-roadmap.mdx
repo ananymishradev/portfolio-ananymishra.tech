@@ -1,0 +1,392 @@
+# ML Roadmap That I Followed
+
+**My honest commentary on every course, book, and resource I used to go from beginner to production ML engineer**
+
+---
+
+*This is my personal journey through machine learning—the courses I took, the books I read, and the lessons I learned along the way. Not every path works for everyone, but here's what actually moved the needle for me.*
+
+---
+
+## Introduction
+
+I started my ML journey the wrong way. Like most people, I heard about AI, got excited, and tried to skip straight to the cool stuff. Neural networks. Transformers. Building chatbots.
+
+That didn't work.
+
+I spent weeks confused, not understanding why my models wouldn't train or why gradients were exploding. I didn't know what I didn't know.
+
+So I started over. This time, I followed a structured path—math first, then fundamentals, then production. This is that journey, with my unfiltered commentary on each resource.
+
+Let's get into it.
+
+---
+
+## Phase 1: The Foundation (Math & Basics)
+
+Before touching any model, you need the math. I tried to skip this. Big mistake. Go back and learn this properly.
+
+### 1. Probability and Statistics — Stanford Online
+
+**[Course](https://online.stanford.edu/courses/gps-probability-and-statistics)**
+
+This was my first real step into ML, and honestly, it was humbling. I'd done some statistics in school, but this course connected everything. Probability distributions, Bayesian thinking, hypothesis testing—it all clicked.
+
+**My take:** Don't skip this. Even if you think you know it, take the course. The way they connect probability to ML concepts is worth it. I use concepts from this course every single day.
+
+**Difficulty:** 6/10
+**Time needed:** 4-6 weeks
+**Would recommend:** Yes, absolutely.
+
+---
+
+### 2. Linear Algebra — MIT (Gilbert Strang)
+
+**[Course](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/)**
+
+This is the legendary course everyone talks about. And they're right.
+
+Initially, I thought linear algebra was just about memorizing matrix operations. But Strang made me understand *why* matrices represent transformations, *why* eigenvalues matter, and *how* everything connects to ML.
+
+The aha moment for me was when I finally understood that neural networks are just layers of matrix multiplications with non-linearities in between. It changed everything.
+
+**My take:** Some students describe this as "life changing." I'm one of them. If you're serious about ML, do this course. The 2010 version is fine—the quality hasn't dropped.
+
+**Difficulty:** 7/10
+**Time needed:** 8-10 weeks (go at your pace)
+**Would recommend:** Yes, without hesitation.
+
+---
+
+### 3. CS231N: Convolutional Neural Networks — Stanford
+
+**[Course](http://cs231n.stanford.edu/)** | **[Lecture Videos](https://www.youtube.com/watch?v=gT6J60kpG2k&list=PL3FWzLuPIjw2c4LNoFK6F51F0-slTqLCL)**
+
+This was my first deep dive into deep learning. And it's still the best course I've found for building intuition.
+
+What hooked me was the lecture notes. They're unbelievably well-written—visualizations of backpropagation, gradient descent, loss functions, regularization, dropouts, batch norm. I must have read the backpropagation section ten times before it finally made sense.
+
+They also have Python assignments that build everything from scratch. No PyTorch, no TensorFlow—just NumPy. Painful at the time, but invaluable for understanding what's actually happening under the hood.
+
+**My take:** Whether you're into computer vision or not, take this course. It teaches you how to think about ML. The 2017 version is what I took and still recommend. The notes are incredible.
+
+**Difficulty:** 7/10
+**Time needed:** 8-12 weeks
+**Would recommend:** Yes, essential.
+
+---
+
+### 4. Practical Deep Learning for Coders — fast.ai
+
+**[Course](https://course.fast.ai/)**
+
+After the theory-heavy CS231N, this was a breath of fresh air. Fast.ai is all about getting results fast.
+
+The difference hit me immediately: in CS231N, I spent weeks understanding the math. In fast.ai, I trained an image classifier in the first lesson. It felt like magic.
+
+But here's the thing—they teach the "how" first, then explain the "why" later. For some learners, this works great. For me, it was complementary to CS231N. I'd learned the theory there, and now I was seeing how to apply it in the real world.
+
+**My take:** Best for people who want to build things quickly. The forum is incredibly active with helpful discussions. The courses update regularly with the latest best practices.
+
+**Difficulty:** 5/10
+**Time needed:** 4-8 weeks
+**Would recommend:** Yes, especially as a companion to CS231N.
+
+---
+
+### 5. CS224N: Natural Language Processing — Stanford
+
+**[Course](https://cs224n.stanford.edu/)** | **[Lecture Videos](https://www.youtube.com/playlist?list=PLoRomAdKJiCwnN9wmqJ2qF0xM8WzUq1r7)**
+
+NLP is where I got seriously hooked. The transformer architecture, attention mechanisms, word embeddings—it all came together here.
+
+Christopher Manning is an incredible teacher. He makes complex concepts accessible, and the course is incredibly well-organized. The lecture notes alone are worth the price (free).
+
+I particularly loved the word2vec section—understanding how to represent words as vectors, how similarity in embedding space maps to semantic similarity. This was the foundation for everything LLM-related later.
+
+**My take:** Essential if you're interested in LLMs, chatbots, text classification, or anything with language. This course directly led to my interest in building LLM applications.
+
+**Difficulty:** 8/10
+**Time needed:** 8-12 weeks
+**Would recommend:** Yes, 100%.
+
+---
+
+### 6. Machine Learning — Andrew Ng (Coursera)
+
+**[Course](https://www.coursera.org/learn/machine-learning)**
+
+The most popular ML course in the world. 2.5 million enrollments. And yes, it's that good.
+
+But here's my honest take: I took this AFTER CS231N and fast.ai, and it felt redundant in some places. The neural networks section was basic compared to what I'd already learned. But the sections on SVMs, clustering, anomaly detection—those were new and valuable.
+
+**My take:** Take this BEFORE the deep learning courses. It's theory-heavy, and you'll benefit more if you've already seen applied ML first. Great course, but order matters.
+
+**Difficulty:** 6/10
+**Time needed:** 8-10 weeks
+**Would recommend:** Yes, but take it in the right order.
+
+---
+
+### 7. Probabilistic Graphical Models — Stanford
+
+**[Course](https://www.coursera.org/specializations/probabilistic-graphical-models)**
+
+This course broke my brain. In a good way.
+
+Unlike other courses that build up from simple concepts, this specialization tackles ML top-down. It asks you to think about relationships between variables, independence assumptions, and how to represent uncertainty.
+
+It fundamentally changed how I approach ML problems. Now I don't just think "what model do I use?"—I think "what am I assuming about the data?"
+
+**My take:** Not easy. Warning sign is real. But transformative if you put in the work. I consulted [Stanford CS228 notes](https://cs.stanford.edu/~ermon/#teaching) constantly.
+
+**Difficulty:** 9/10
+**Time needed:** 12-16 weeks
+**Would recommend:** Yes, if you're serious about ML theory.
+
+---
+
+### 8. Introduction to Reinforcement Learning — David Silver
+
+**[Course](https://www.deepmind.com/learning-resources/reinforcement-learning)**
+
+RL is hard. I mean, really hard. But David Silver makes it accessible.
+
+I loved the intuitive explanations and fun examples. Q-learning, policy gradients, actor-critic methods—everything finally clicked after struggling through papers.
+
+**My take:** Perfect introduction to RL. The examples make abstract concepts concrete. Essential if you're interested in RL, robotics, or game-playing AI.
+
+**Difficulty:** 8/10
+**Time needed:** 8-10 weeks
+**Would recommend:** Yes.
+
+---
+
+### 9. Full Stack Deep Learning — Berkeley
+
+**[Course](https://fullstackdeeplearning.com/)**
+
+This is the course that taught me ML isn't just about models.
+
+Every other course teaches you how to train and tune. This is the only one that showed me how to design, train, AND deploy. Data pipelines, experiment tracking, model serving, CI/CD for ML.
+
+**My take:** Essential for anyone preparing for ML system design interviews or wanting to build production systems. I use concepts from this course constantly at work.
+
+**Difficulty:** 7/10
+**Time needed:** 4-6 weeks
+**Would recommend:** Yes, especially near the end of your fundamentals journey.
+
+---
+
+## Essential Books (My Commentary)
+
+### « Machine Learning: A Probabilistic Perspective » — Kevin P. Murphy
+
+**[Free draft PDF](https://probml.github.io/pml-book/book1.html)**
+
+My reference book. If I forget how something works, I check here first. Comprehensive, well-explained, with code examples.
+
+**Verdict:** Keep on your desk.
+
+---
+
+### « Information Theory, Inference, and Learning Algorithms » — David MacKay
+
+**[Free online](http://www.inference.org.uk/itprnn/book.html)**
+
+This book changed how I think about ML. It connects information theory to machine learning in ways no other book does.
+
+**Verdict:** Eye-opening.
+
+---
+
+### « Deep Learning » — Goodfellow, Bengio, Courville
+
+**[Free online](https://www.deeplearningbook.org/)**
+
+The definitive DL textbook. I reference it constantly for theoretical foundations.
+
+**Verdict:** Essential.
+
+---
+
+### « Reinforcement Learning: An Introduction » — Sutton & Barto
+
+**[Free online](http://incompleteideas.net/book/the-book-2nd.html)**
+
+The RL bible. Always open on my desk when working on RL projects.
+
+**Verdict:** Essential for RL.
+
+---
+
+### « Introduction to Information Retrieval » — Manning, Raghavan, Schütze
+
+**[Free online](https://nlp.stanford.edu/IR-book/)**
+
+Essential for NLP. Before you touch transformers, understand classical IR.
+
+**Verdict:** Essential for NLP work.
+
+---
+
+### « Designing Machine Learning Systems » — Chip Huyen
+
+**[O'Reilly](https://www.amazon.com/Designing-Machine-Learning-Systems-Production-Ready/dp/1098107969)**
+
+Actually read this after I was already working in ML. But it organized everything I knew into a coherent framework. Now I recommend it to everyone starting their production journey.
+
+**Verdict:** Best MLOps book I've found.
+
+---
+
+## Phase 2: Production ML (MLOps)
+
+This is where I made my biggest mistakes. Learning production ML wasn't part of any course—it's stuff I learned the hard way.
+
+### What Nobody Tells You About Production ML
+
+In courses, you clean a dataset, train a model, and submit. In production, the real work begins:
+
+- Data bugs are harder to debug than model bugs
+- Your model works great on training data and falls apart in production
+- Monitoring is non-negotiable—you can't improve what you can't measure
+- The model is 10% of the work
+
+### Resources That Helped
+
+- **[Rules of Machine Learning](https://developers.google.com/machine-learning/guides/rules-of-ml)** by Martin Zinkevich — Google's internal guide. Practical wisdom from years of production ML.
+- **[What I Learned from 200 ML Tools](https://huyenchip.com/2020/06/22/mlops.html)** — My landscape analysis. Helps you understand the ecosystem.
+- **[The ML Test Score](https://research.google/pubs/pub46555/)** — A rubric for production readiness. Use this to evaluate your systems.
+
+### The Gap Nobody Talks About
+
+There's a massive gap between "I built a model in a notebook" and "I deployed a model that serves millions of users."
+
+I bridges this gap through:
+
+1. Reading case studies (see below)
+2. Building side projects end-to-end
+3. Breaking things in production (learned a lot from incidents)
+
+---
+
+## Phase 3: Learning from Case Studies
+
+Theory is useless without practice. These case studies showed me how production ML actually works.
+
+### What I Learned
+
+1. **Airbnb: Predicting Home Values** — End-to-end workflow, feature engineering, prototyping. This is what production ML looks like.
+
+2. **Netflix: Streaming Quality** — Scale matters. 117M members globally means your "little" optimization has huge impact.
+
+3. **Booking.com: 150 ML Models** — Model performance ≠ business performance. The biggest lesson: measure business impact, not just accuracy.
+
+4. **Lyft: Fraud Detection** — Simplicity wins. Logistic regression with good features beat complex models for years. Complexity is a last resort.
+
+5. **Uber: Michelangelo** — Organization matters. How you structure ML teams determines what you can build.
+
+6. **Instacart: Path Optimization** — System design is ML. Sometimes the algorithm matters less than how you frame the problem.
+
+---
+
+## Phase 4: Career Preparation
+
+Here's how I prepared for ML roles—and what I'd do differently.
+
+### The Interview Process
+
+ML interviews are different from software engineering:
+
+- Algorithm design (like SWE)
+- ML system design (designing ML pipelines)
+- Domain knowledge (your specific space)
+- Coding (usually Python + NumPy/PyTorch)
+
+**What helped:**
+
+- **[ML Interviews Book](https://huyenchip.com/ml-interviews-book/)** — Free. I've read it three times.
+- **[The ML Interview Process](https://twitter.com/chipro/status/1152077188985835521)** — My Twitter thread on the process.
+
+### What Employers Actually Look For
+
+After going through dozens of interviews and hiring, here's what stands out:
+
+- Strong fundamentals (can you explain what your model is doing?)
+- Production experience (can you deploy?)
+- System design (can you build scalable systems?)
+- Communication (can you explain to stakeholders?)
+
+### My Career Lessons
+
+- Don't just study—build things
+- Open source contributions matter
+- Personal projects demonstrate initiative
+- Network, Network, Network
+
+---
+
+## What I’d Do Differently
+
+If I were starting over, here's what I'd change:
+
+**1. Skip straight to PyTorch**
+I learned Theano first. It's dead now. The landscape changes fast—focus on fundamentals that transfer.
+
+**2. Spend more time on math earlier**
+I tried to skip linear algebra and probability. Just slowed me down later. Do it first.
+
+**3. Build end-to-end projects sooner**
+I spent too long on courses. The moment I started building projects, everything clicked. Courses are 20%—projects are 80%.
+
+**4. Don't obsess over the "best" course**
+There's no perfect course. Just start. You can always supplement later.
+
+**5. Find a community earlier**
+ML is hard alone. Find people learning with you. The [Discord community](https://discord.gg/qqG5EypjvZ) helped me more than any course.
+
+---
+
+## My Recommended Path (In Order)
+
+Here's the exact sequence I'd take:
+
+1. **Probability & Statistics** (Stanford) — 4-6 weeks
+2. **Linear Algebra** (MIT Strang) — 8-10 weeks
+3. **CS231N** (Stanford) — 8-12 weeks
+4. **Fast.ai** — 4-8 weeks
+5. **CS224N** (Stanford) — 8-12 weeks
+6. **Andrew Ng ML** — 8-10 weeks
+7. **Full Stack Deep Learning** — 4-6 weeks
+8. **Production ML projects** — ongoing
+
+**Total:** 12-18 months for fundamentals. Then constant learning.
+
+---
+
+## Final Thoughts
+
+This journey isn't linear. You'll go forward, backward, get confused, have breakthroughs. That's normal.
+
+The key insight I can leave you with: **don't skip the foundation**.
+
+The "shortcuts" will cost you more in the long run. The math you skip will trip you up later. The fundamentals you ignore will make production ML impossible.
+
+Take your time. Build things. Break things. Learn from mistakes.
+
+That's how you actually learn ML.
+
+---
+
+## What's Next
+
+This is a living document. I'm continuously updating it based on what works and what doesn't.
+
+- **[Join the community](https://discord.gg/qqG5EypjvZ)** — 15k+ members discussing ML
+- **[Share feedback](https://twitter.com/chipro)** — Let me know what helped
+
+---
+
+*Last updated: January 2025*
+*Written from personal experience. Your mileage may vary.*

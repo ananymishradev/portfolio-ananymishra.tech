@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import BackgroundVideo from "next-video/background-video"
 import bgVideo from "../videos/light-bg.mp4";
+import { siteConfig } from "@/lib/site-config"
   
 export function HeroSection() {
   return (
@@ -37,9 +38,9 @@ export function HeroSection() {
             className="absolute bottom-24 left-8 right-8 max-w-2xl lg:bottom-32 lg:left-16 lg:right-auto"
           >
             <h1 className="font-serif text-4xl md:text-5xl lg:text-7xl text-foreground leading-[1.1] text-balance">
-              Anany Mishra
+              {siteConfig.authorName}
               <br />
-              AI Engineer
+              {siteConfig.authorTitle}
             </h1>
           </motion.div>
         </div>

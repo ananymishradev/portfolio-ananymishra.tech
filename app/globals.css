@@ -1,13 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "katex/dist/katex.min.css";
 
 @custom-variant dark (&:is(.dark *));
 
 /* Updated color palette for luxury aesthetic */
 :root {
-  --background: #f9f9f9;
+  --background: #eae7e0;
   --foreground: #0a0a0a;
-  --card: #f9f9f9;
+  --card: #eae7e0;
   --card-foreground: #0a0a0a;
   --popover: #f9f9f9;
   --popover-foreground: #0a0a0a;
@@ -125,5 +126,91 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .prose-blog {
+    color: color-mix(in oklab, var(--foreground) 85%, transparent);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .prose-blog h1,
+  .prose-blog h2,
+  .prose-blog h3,
+  .prose-blog h4 {
+    color: var(--foreground);
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-top: 2.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .prose-blog p,
+  .prose-blog ul,
+  .prose-blog ol,
+  .prose-blog table,
+  .prose-blog blockquote {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose-blog a {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose-blog img {
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    width: 100%;
+    height: auto;
+  }
+
+  .prose-blog blockquote {
+    border-left: 3px solid var(--border);
+    padding-left: 1rem;
+    color: color-mix(in oklab, var(--foreground) 75%, transparent);
+  }
+
+  .prose-blog table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .prose-blog th,
+  .prose-blog td {
+    border: 1px solid var(--border);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+  }
+
+  .prose-blog pre {
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+    margin: 1.25rem 0;
+    background: color-mix(in oklab, var(--card) 88%, #0f172a 12%);
+  }
+
+  .prose-blog code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  .prose-blog :not(pre) > code {
+    border: 1px solid var(--border);
+    border-radius: 0.4rem;
+    padding: 0.15rem 0.35rem;
+    background: color-mix(in oklab, var(--muted) 85%, transparent);
   }
 }

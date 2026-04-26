@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
+import { siteConfig } from "@/lib/site-config"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -74,7 +75,7 @@ export function Navigation() {
               href="/"
               className="absolute left-1/2 -translate-x-1/2 font-serif text-xl lg:text-2xl tracking-[0.3em] uppercase text-foreground"
             >
-              A Calm Engineer
+              {siteConfig.title}
             </Link>
           </div>
         </nav>
