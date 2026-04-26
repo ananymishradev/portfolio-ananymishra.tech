@@ -23,7 +23,8 @@ export function HeroSection() {
             playsInline
             controls={false}
             preload="auto"
-            className="absolute inset-0 !h-full !w-full !aspect-auto object-cover object-center"
+            className="hero-bg-video absolute inset-0 !h-full !w-full !aspect-auto object-cover"
+            style={{ "--media-object-position": "100% 100%" } as React.CSSProperties}
             aria-hidden="true"
           />
           <div className="absolute inset-0 bg-foreground/10" />
