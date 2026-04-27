@@ -10,6 +10,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/Blogs",
   },
+  openGraph: {
+    type: "website",
+    url: "/Blogs",
+    title: `Blogs | ${siteConfig.title}`,
+    description: `Articles by ${siteConfig.authorName} on AI systems, infrastructure, and engineering.`,
+    images: [{ url: siteConfig.ogImage }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Blogs | ${siteConfig.title}`,
+    description: `Articles by ${siteConfig.authorName} on AI systems, infrastructure, and engineering.`,
+    images: [siteConfig.ogImage],
+  },
 }
 
 export default async function BlogsPage() {

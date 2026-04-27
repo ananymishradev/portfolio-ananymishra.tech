@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Navigation } from "@/components/navigation"
 import { getAllPostsMeta, getPostBySlug } from "@/lib/blog"
+import { toJsonLd } from "@/lib/seo"
 import { siteConfig } from "@/lib/site-config"
 
 type PageProps = {
@@ -37,6 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: post.frontmatter.title,
     description: post.frontmatter.description,
+    keywords: post.frontmatter.tags,
     alternates: {
       canonical,
     },
@@ -67,8 +69,29 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound()
   }
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.frontmatter.title,
+    description: post.frontmatter.description,
+    datePublished: post.frontmatter.date,
+    dateModified: post.frontmatter.date,
+    author: {
+      "@type": "Person",
+      name: post.frontmatter.author ?? siteConfig.authorName,
+    },
+    publisher: {
+      "@type": "Person",
+      name: siteConfig.authorName,
+    },
+    mainEntityOfPage: `${siteConfig.url}/Blogs/${post.slug}`,
+    image: post.frontmatter.coverImage ? [post.frontmatter.coverImage] : [`${siteConfig.url}${siteConfig.ogImage}`],
+    keywords: post.frontmatter.tags,
+  }
+
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: toJsonLd(articleJsonLd) }} />
       <Navigation />
 
       <article className="mx-auto max-w-4xl px-6 pb-20 pt-28 lg:px-8 lg:pt-36">
