@@ -130,11 +130,11 @@
 }
 
 @layer components {
-  .hero-bg-video.next-video-container {
-    display: block;
-    aspect-ratio: auto !important;
-    overflow: hidden;
-  }
+.hero-bg-video.next-video-container {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
 
   .hero-bg-video .next-video-bg {
     position: relative;

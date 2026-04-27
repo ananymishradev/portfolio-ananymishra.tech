@@ -17,13 +17,15 @@ export function HeroSection() {
         <div className="absolute inset-0 pointer-events-none">
           <BackgroundVideo
             src={bgVideo}
+            poster="https://image.mux.com/6KllKoiz1Wy8Nyq1nhf01cKUfPOo9qkHuEatxiGl8A74/thumbnail.png?width=2140&height=1210&time=5"
             sizes="(max-width: 1024px) 100vw, 78vw"
             muted
             loop
             playsInline
+            preload="none"
             controls={false}
-            preload="auto"
-            className="hero-bg-video absolute inset-0 !h-full !w-full !aspect-auto object-cover"
+            autoPlay
+            className="hero-bg-video absolute inset-0 !h-full !w-full !aspect-video object-cover"
             style={
               { "--media-object-position": "100% 100%" } as React.CSSProperties & {
                 [key: `--${string}`]: string | number

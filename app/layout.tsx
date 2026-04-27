@@ -41,6 +41,9 @@ export const metadata: Metadata = {
     },
   },
   manifest: "/site.webmanifest",
+  other: {
+    "theme-color": "#0a0a0a",
+  },
   icons: {
     icon: [
       {
