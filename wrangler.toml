@@ -1,5 +1,6 @@
 name = "anany-mishra-portfolio"
 compatibility_date = "2024-04-27"
+compatibility_flags = ["nodejs_compat"]
 
-[site]
-bucket = "./out"
+[pages]
+project_name = "anany-mishra-portfolio"

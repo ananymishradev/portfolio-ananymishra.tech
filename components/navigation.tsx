@@ -69,9 +69,36 @@ export function Navigation() {
                 </Link>
               ))}
             </div>
-          </div>
+</div>
         </nav>
       </motion.header>
+
+      {/* Mobile menu panel */}
+      {isMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-b border-border lg:hidden"
+        >
+          <div className="px-6 py-4 space-y-3">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`block text-sm tracking-[0.2em] uppercase py-2 transition-colors ${
+                  pathname === link.href ? navItemColor : navItemHoverColor
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {/* Spacer to account for fixed header */}
+      <div className="h-16 lg:h-20" />
     </>
   )
 }
