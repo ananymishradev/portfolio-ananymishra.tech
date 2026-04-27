@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
-import { siteConfig } from "@/lib/site-config"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -32,7 +31,7 @@ export function Navigation() {
 
   const navItemColor = "text-foreground"
   const navItemHoverColor = "text-foreground hover:text-foreground"
-  const iconColor = isScrolled ? "text-foreground" : "text-white"
+  const iconColor = isScrolled || isMenuOpen ? "text-foreground" : "text-white"
 
   return (
     <>
@@ -41,16 +40,19 @@ export function Navigation() {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? "bg-background/80 backdrop-blur-md border-b border-border" : "bg-transparent"
+          isScrolled || isMenuOpen ? "bg-background/80 backdrop-blur-md border-b border-border" : "bg-transparent"
         }`}
       >
         <nav className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex h-16 lg:h-20 items-center justify-between">
             {/* Mobile menu button */}
             <button
+              type="button"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`lg:hidden p-2 -ml-2 transition-colors text-foreground duration-500 ${iconColor}`}
               aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {isMenuOpen ? <X className="h-5 w-5 stroke-[1.5]" /> : <Menu className="h-5 w-5 stroke-[1.5]" />}
             </button>
@@ -69,36 +71,44 @@ export function Navigation() {
                 </Link>
               ))}
             </div>
-</div>
-        </nav>
-      </motion.header>
-
-      {/* Mobile menu panel */}
-      {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-b border-border lg:hidden"
-        >
-          <div className="px-6 py-4 space-y-3">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`block text-sm tracking-[0.2em] uppercase py-2 transition-colors ${
-                  pathname === link.href ? navItemColor : navItemHoverColor
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
           </div>
-        </motion.div>
-      )}
+        </nav>
 
-      {/* Spacer to account for fixed header */}
-      <div className="h-16 lg:h-20" />
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              id="mobile-navigation"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="lg:hidden border-t border-border/70 bg-background/95 backdrop-blur-md"
+            >
+              <div className="mx-auto max-w-7xl px-6 py-4">
+                <div className="flex flex-col gap-1">
+                  {navLinks.map((link) => {
+                    const isActive = pathname === link.href
+
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className={`rounded-md px-3 py-2 text-sm uppercase tracking-[0.2em] transition-colors duration-200 ${
+                          isActive
+                            ? "bg-foreground text-background"
+                            : "text-foreground/80 hover:bg-foreground/5 hover:text-foreground"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.header>
     </>
   )
 }
