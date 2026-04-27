@@ -1,23 +1,21 @@
 "use client"
 
-import Link from "next/link"
 import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
 import BackgroundVideo from "next-video/background-video"
-import bgVideo from "../videos/light-bg.mp4";
-import { siteConfig } from "@/lib/site-config"
-  
-export function HeroSection() {
+import bgVideo from "../videos/light-bg.mp4"
+
+type BlogPostHeroProps = {
+  title: string
+}
+
+export function BlogPostHero({ title }: BlogPostHeroProps) {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-foreground">
-      {/* Right content - 80% */}
       <div className="relative min-h-[100svh]">
-        {/* Background image - converted to Next.js Image with priority for LCP */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="pointer-events-none absolute inset-0">
           <BackgroundVideo
             src={bgVideo}
-            sizes="(max-width: 1024px) 100vw, 78vw"
+            sizes="100vw"
             muted
             loop
             playsInline
@@ -31,26 +29,20 @@ export function HeroSection() {
             }
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-foreground/10" />
+          <div className="absolute inset-0 bg-foreground/25" />
         </div>
 
-        {/* Content overlay */}
         <div className="absolute inset-0 z-10 p-8 lg:p-16">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="absolute bottom-24 left-8 right-8 max-w-2xl lg:bottom-32 lg:left-16 lg:right-auto"
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="absolute bottom-24 left-8 right-8 max-w-4xl lg:bottom-32 lg:left-16 lg:right-auto"
           >
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-7xl text-foreground leading-[1.1] text-balance">
-              {siteConfig.authorName}
-              <br />
-              {siteConfig.authorTitle}
-            </h1>
+            <h1 className="font-serif text-4xl leading-[1.05] text-foreground text-balance md:text-5xl lg:text-7xl">{title}</h1>
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -60,7 +52,7 @@ export function HeroSection() {
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-            className="w-[1px] h-12 bg-background/50"
+            className="h-12 w-[1px] bg-background/60"
           />
         </motion.div>
       </div>

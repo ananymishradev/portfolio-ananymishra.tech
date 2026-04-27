@@ -85,7 +85,7 @@ export const siteConfig = {
     process.env.SITE_AUTHOR_AVATAR,
     "https://ananymishra.tech/developer-portrait.png",
   ),
-  ogImage: readString(process.env.NEXT_PUBLIC_SEO_OG_IMAGE, process.env.SEO_OG_IMAGE, "/og-image.png"),
+  ogImage: readString(process.env.NEXT_PUBLIC_SEO_OG_IMAGE, process.env.SEO_OG_IMAGE, "/og-image.jpeg"),
   robotsIndex: readBoolean(process.env.NEXT_PUBLIC_SEO_ROBOTS_INDEX, process.env.SEO_ROBOTS_INDEX, true),
   robotsFollow: readBoolean(process.env.NEXT_PUBLIC_SEO_ROBOTS_FOLLOW, process.env.SEO_ROBOTS_FOLLOW, true),
   social,

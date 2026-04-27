@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Navigation } from "@/components/navigation"
+import { BlogPostHero } from "@/components/blog-post-hero"
 import { getAllPostsMeta, getPostBySlug } from "@/lib/blog"
 import { toJsonLd } from "@/lib/seo"
 import { siteConfig } from "@/lib/site-config"
@@ -94,14 +95,9 @@ export default async function BlogPostPage({ params }: PageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: toJsonLd(articleJsonLd) }} />
       <Navigation />
 
-      <article className="mx-auto max-w-4xl px-6 pb-20 pt-28 lg:px-8 lg:pt-36">
-        <header className="mb-10 border-b border-border pb-8">
-          <p className="text-xs uppercase tracking-[0.2em] text-foreground/55">{formatDate(post.frontmatter.date)}</p>
-          <h1 className="mt-3 font-serif text-4xl leading-[1.06] tracking-[-0.02em] sm:text-5xl">{post.frontmatter.title}</h1>
-          <p className="mt-4 text-base leading-7 text-foreground/75">{post.frontmatter.description}</p>
-          <p className="mt-3 text-sm text-foreground/60">By {post.frontmatter.author ?? siteConfig.authorName}</p>
-        </header>
+      <BlogPostHero title={post.frontmatter.title} />
 
+      <article className="mx-auto max-w-4xl px-6 pb-20 pt-14 lg:px-8 lg:pt-20">
         <div className="prose-blog">{post.content}</div>
       </article>
     </main>

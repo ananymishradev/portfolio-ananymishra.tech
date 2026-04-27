@@ -69,14 +69,6 @@ export function Navigation() {
                 </Link>
               ))}
             </div>
-
-            {/* Logo - MAISON color stays unchanged (always uses foreground) */}
-            <Link
-              href="/"
-              className="absolute left-1/2 -translate-x-1/2 font-serif text-xl lg:text-2xl tracking-[0.3em] uppercase text-foreground"
-            >
-              {siteConfig.title}
-            </Link>
           </div>
         </nav>
       </motion.header>
