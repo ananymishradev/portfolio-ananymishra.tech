@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer"
 import { siteConfig } from "@/lib/site-config"
 import { toJsonLd } from "@/lib/seo"
 import { getAllPostsMeta } from "@/lib/blog"
+import About from "@/components/about"
 
 export const metadata: Metadata = {
   title: "AI Systems Engineering and Blog",
@@ -47,7 +48,8 @@ export default async function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: toJsonLd(websiteJsonLd) }} />
       <Navigation />
       <HeroSection />
-      <section className="w-full px-8 py-16 md:px-16 lg:py-20">
+      <About />
+      <section className="w-full px-8 py-8 md:px-16 lg:py-12">
         <BlogsCarousel posts={posts} />
       </section>
       <Footer />
