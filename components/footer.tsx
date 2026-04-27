@@ -5,8 +5,6 @@ import { useRef, useState } from "react"
 import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
 import Image from "next/image"
-import ananySignature from "../images/anany.png"
-import mishraSignature from "../images/mishra.png"
 import { footerSocialLinks } from "@/lib/site-config"
 
 type SocialLink = {
@@ -66,22 +64,22 @@ export function Footer({
 
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.05]" />
       <div className="relative mx-auto max-w-7xl px-6 py-1 lg:px-8 lg:py-6">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] lg:gap-8">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,65%)_minmax(0,35%)] lg:gap-8">
           {/* Signatures - shown first on mobile, right on desktop */}
-          <div className="flex lg:order-2 justify-start py-2 lg:justify-end lg:py-4">
-            <div className="flex w-full flex-col gap-3">
+          <div className="order-2 lg:order-2 py-2 lg:py-4">
+            <div className="relative h-full min-h-[340px] w-full overflow-hidden border border-border bg-card lg:min-h-0">
               <Image
                 src="/ABOUT-2.png"
                 alt="About secondary visual"
                 fill
-                sizes="(max-width: 1024px) 100vw, 30vw"
-                className="object-cover object-center saturate-[0.9]"
+                sizes="(max-width: 1024px) 100vw, 35vw"
+                className="object-contain object-bottom saturate-[0.9]"
                 />
             </div>
           </div>
 
           {/* Social links - shown second on mobile, left on desktop */}
-          <div className="space-y-3 lg:order-1">
+          <div className="order-1 space-y-3 lg:order-1">
             {links.map((link, index) => (
               <motion.a
                 key={link.label}

@@ -10,10 +10,7 @@ import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import { mdxComponents } from "@/components/mdx-components"
 
-const BLOG_DIRS = [
-  path.join(process.cwd(), "data", "blog"),
-  path.join(process.cwd(), "content", "blog"),
-]
+const BLOG_DIRS = [path.join(process.cwd(), "data", "blog")]
 
 export const BLOG_REVALIDATE_SECONDS = 60 * 60
 
