@@ -66,26 +66,17 @@ export function Footer({
 
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.05]" />
       <div className="relative mx-auto max-w-7xl px-6 py-1 lg:px-8 lg:py-6">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] lg:gap-8">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] lg:gap-8">
           {/* Signatures - shown first on mobile, right on desktop */}
           <div className="flex lg:order-2 justify-start py-2 lg:justify-end lg:py-4">
             <div className="flex w-full flex-col gap-3">
               <Image
-                src={ananySignature}
-                alt="Anany signature"
-                width={1040}
-                height={360}
-                className="h-auto w-full object-contain"
-                priority={false}
-              />
-              <Image
-                src={mishraSignature}
-                alt="Mishra signature"
-                width={1040}
-                height={360}
-                className="h-auto w-full object-contain"
-                priority={false}
-              />
+                src="/ABOUT-2.png"
+                alt="About secondary visual"
+                fill
+                sizes="(max-width: 1024px) 100vw, 30vw"
+                className="object-cover object-center saturate-[0.9]"
+                />
             </div>
           </div>
 

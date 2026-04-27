@@ -14,49 +14,34 @@ export default function About() {
         </header>
 
         <section className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-stretch lg:gap-8">
-          <div className="space-y-6">
-            <div className="overflow">
-              <div className="relative h-[min(250vh,60rem)]">
-                <Image
-                  src="/ABOUT-1.png"
-                  alt="About profile visual"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 65vw"
-                  className="object-cover object-center"
-                />
-              </div>
-            </div>
-          </div>
-
           <aside className="space-y-6">
             <article className="border border-border bg-card p-6">
-              <p className="mt-4 text-sm leading-7 text-foreground/70">{siteConfig.authorBio}</p>
-              <p className="mt-4 text-sm leading-7 text-foreground/70">
+              <p className="mt-4 text-sm leading-7 text-foreground">{siteConfig.authorBio}</p>
+              <p className="mt-4 text-sm leading-7 text-foreground">
                 I spend most of my time turning ideas into systems that can actually run in production with clear reliability targets.
               </p>
             </article>
 
-            <div className="overflow-hidden border border-border bg-card">
-              <div className="relative h-[clamp(20rem,44vw,38rem)] bg-background">
-                <Image
-                  src="/ABOUT-2.png"
-                  alt="About secondary visual"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 30vw"
-                  className="object-cover object-center saturate-[0.9]"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(234,231,224,0.02)_0%,rgba(234,231,224,0.2)_100%)]" />
-              </div>
-            </div>
-
             <article className="border border-border bg-card p-6">
-              <p className="text-xs uppercase tracking-[0.24em] text-foreground/45">Current priorities</p>
-              <p className="mt-4 text-sm leading-7 text-foreground/70">
+              <p className="uppercase tracking-[0.24em] text-foreground">Current priorities</p>
+              <p className="mt-4 text-sm leading-7 text-foreground">
                 Right now I am focused on low-latency LLM pipelines, practical eval loops, and shipping workflows that teams can maintain without heavy overhead.
               </p>
             </article>
           </aside>
+
+          <div className="overflow-hidden border border-border bg-card">
+            <div className="relative aspect-[4/5] min-h-[420px] lg:h-full lg:min-h-[560px]">
+              <Image
+                src="/ABOUT-1.png"
+                alt="About profile visual"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover object-center"
+              />
+            </div>
+          </div>
         </section>
       </div>
     </main>
