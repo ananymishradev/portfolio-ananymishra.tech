@@ -4,6 +4,8 @@ import { BlogsCarousel } from "@/components/blogs-carousel"
 import { getAllPostsMeta } from "@/lib/blog"
 import { siteConfig } from "@/lib/site-config"
 
+export const revalidate = 3600
+
 export const metadata: Metadata = {
   title: "Blogs",
   description: `Articles by ${siteConfig.authorName} on AI systems, infrastructure, and engineering.`,

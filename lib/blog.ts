@@ -15,10 +15,18 @@ const BLOG_DIRS = [
   path.join(process.cwd(), "content", "blog"),
 ]
 
+export const BLOG_REVALIDATE_SECONDS = 60 * 60
+
+type BlogFile = {
+  dir: string
+  entry: string
+}
+
 export type BlogFrontmatter = {
   title: string
   description: string
   date: string
+  slug?: string
   published?: boolean
   author?: string
   tags?: string[]
@@ -63,6 +71,27 @@ const listBlogEntries = async (dir: string) => {
   }
 }
 
+const listBlogFiles = async (): Promise<BlogFile[]> => {
+  const allEntries = await Promise.all(BLOG_DIRS.map((dir) => listBlogEntries(dir)))
+
+  return BLOG_DIRS.flatMap((dir, index) =>
+    allEntries[index]
+      .filter((entry) => entry.endsWith(".mdx"))
+      .map((entry) => ({ dir, entry })),
+  )
+}
+
+const toSlug = (value: string) => {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/[\s_]+/g, "-")
+    .replace(/-+/g, "-")
+}
+
 const extractFirstHeading = (source: string) => {
   const lines = source.split("\n")
   const headingLine = lines.find((line) => line.trim().startsWith("# "))
@@ -76,12 +105,13 @@ const removeFirstH1 = (source: string) => {
 
 const normalizeFrontmatter = (
   raw: Partial<BlogFrontmatter>,
-  fallback: { title: string; description: string; date: string },
+  fallback: { title: string; description: string; date: string; slug: string },
 ): BlogFrontmatter => {
   return {
     title: raw.title ?? fallback.title,
     description: raw.description ?? fallback.description,
     date: raw.date ?? fallback.date,
+    slug: raw.slug ? toSlug(raw.slug) : fallback.slug,
     published: raw.published ?? true,
     author: raw.author ?? "Anany Mishra",
     tags: raw.tags ?? [],
@@ -89,44 +119,59 @@ const normalizeFrontmatter = (
   }
 }
 
+const readPostSource = async ({ dir, entry }: BlogFile) => {
+  const fullPath = path.join(dir, entry)
+  const source = await fs.readFile(fullPath, "utf8")
+  const { content, data } = matter(source)
+  const fileSlug = toSlug(entry.replace(/\.mdx$/, ""))
+  const derivedTitle = extractFirstHeading(source) ?? fileSlug.replace(/[-_]/g, " ")
+  const hasExplicitTitle = typeof data.title === "string" && data.title.trim().length > 0
+  const frontmatter = normalizeFrontmatter(data as Partial<BlogFrontmatter>, {
+    title: derivedTitle,
+    description: `Read ${derivedTitle}.`,
+    date: new Date().toISOString(),
+    slug: fileSlug,
+  })
+
+  return {
+    content,
+    frontmatter,
+    hasExplicitTitle,
+  }
+}
+
 export async function getAllPostsMeta(): Promise<BlogPostMeta[]> {
   try {
-    const allEntries = await Promise.all(BLOG_DIRS.map((dir) => listBlogEntries(dir)))
-
-    const mdxFiles = Array.from(new Set(allEntries.flat().filter((entry) => entry.endsWith(".mdx"))))
+    const files = await listBlogFiles()
 
     const posts = await Promise.all(
-      mdxFiles.map(async (entry) => {
-        const slug = entry.replace(/\.mdx$/, "")
+      files.map(async (file) => {
+        try {
+          const { frontmatter } = await readPostSource(file)
 
-        for (const dir of BLOG_DIRS) {
-          const fullPath = path.join(dir, entry)
-
-          try {
-            const source = await fs.readFile(fullPath, "utf8")
-            const { data } = matter(source)
-            const derivedTitle = extractFirstHeading(source) ?? slug.replace(/[-_]/g, " ")
-            const frontmatter = normalizeFrontmatter(data as Partial<BlogFrontmatter>, {
-              title: derivedTitle,
-              description: `Read ${derivedTitle}.`,
-              date: new Date().toISOString(),
-            })
-
-            return {
-              slug,
-              ...frontmatter,
-            }
-          } catch {
-            continue
+          return {
+            slug: frontmatter.slug ?? toSlug(file.entry.replace(/\.mdx$/, "")),
+            ...frontmatter,
           }
+        } catch {
+          return null
         }
-
-        return null
       }),
     )
 
-    return posts
-      .filter((post): post is BlogPostMeta => post !== null)
+    const uniquePosts = Array.from(
+      posts
+        .filter((post): post is BlogPostMeta => post !== null)
+        .reduce((acc, post) => {
+          if (!acc.has(post.slug)) {
+            acc.set(post.slug, post)
+          }
+          return acc
+        }, new Map<string, BlogPostMeta>())
+        .values(),
+    )
+
+    return uniquePosts
       .filter((post) => post.published)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   } catch {
@@ -135,20 +180,21 @@ export async function getAllPostsMeta(): Promise<BlogPostMeta[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<CompiledBlogPost | null> {
-  for (const dir of BLOG_DIRS) {
-    const fullPath = path.join(dir, `${slug}.mdx`)
+  const targetSlug = toSlug(slug)
+  const files = await listBlogFiles()
+
+  for (const file of files) {
 
     try {
-      const source = await fs.readFile(fullPath, "utf8")
-      const { content, data } = matter(source)
-      const derivedTitle = extractFirstHeading(source) ?? slug.replace(/[-_]/g, " ")
-      const shouldTrimFirstHeading = !data.title && Boolean(extractFirstHeading(content))
+      const { content, frontmatter, hasExplicitTitle } = await readPostSource(file)
+      const postSlug = frontmatter.slug ?? toSlug(file.entry.replace(/\.mdx$/, ""))
+
+      if (postSlug !== targetSlug) {
+        continue
+      }
+
+      const shouldTrimFirstHeading = !hasExplicitTitle && Boolean(extractFirstHeading(content))
       const normalizedContent = shouldTrimFirstHeading ? removeFirstH1(content) : content
-      const frontmatter = normalizeFrontmatter(data as Partial<BlogFrontmatter>, {
-        title: derivedTitle,
-        description: `Read ${derivedTitle}.`,
-        date: new Date().toISOString(),
-      })
 
       const compiled = await compileMDX({
         source: normalizedContent,
@@ -159,7 +205,7 @@ export async function getPostBySlug(slug: string): Promise<CompiledBlogPost | nu
       })
 
       return {
-        slug,
+        slug: postSlug,
         frontmatter,
         content: compiled.content,
       }

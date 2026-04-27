@@ -1,22 +1,10 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Inter, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { SmoothScrollProvider } from "@/components/smooth-scroll-provider"
 import { SiteBottomBar } from "@/components/site-bottom-bar"
 import { siteConfig } from "@/lib/site-config"
-
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-})
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -46,6 +34,11 @@ export const metadata: Metadata = {
   robots: {
     index: siteConfig.robotsIndex,
     follow: siteConfig.robotsFollow,
+  },
+  alternates: {
+    types: {
+      "application/rss+xml": `${siteConfig.url}/feed.xml`,
+    },
   },
   manifest: "/site.webmanifest",
   icons: {
@@ -81,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang={siteConfig.language} className={`${inter.variable} ${playfair.variable}`}>
+    <html lang={siteConfig.language}>
       <body className={`font-sans antialiased`}>
         <SmoothScrollProvider>
           <div className="flex min-h-screen flex-col">
