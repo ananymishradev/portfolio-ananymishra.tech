@@ -1,26 +1,16 @@
 import { withNextVideo } from "next-video/process";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
   experimental: {
     optimizeCss: true,
   },
   typescript: {
     ignoreBuildErrors: true,
-  },
-  images: {
-    formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "image.mux.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "stream.mux.com",
-        pathname: "/**",
-      },
-    ],
   },
   compress: true,
   poweredByHeader: false,
