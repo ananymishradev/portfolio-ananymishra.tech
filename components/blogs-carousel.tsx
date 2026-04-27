@@ -47,25 +47,23 @@ export function BlogsCarousel({ posts }: BlogsCarouselProps) {
 
   return (
     <>
-      <div className="mb-10 flex items-start justify-between">
-        <h2 className="font-serif text-[clamp(20px,2.5vw,28px)] leading-[1.3] tracking-[-0.01em] text-foreground">
-          My Writings
-          <br />
-          and Research
-        </h2>
-      </div>
+      <header className="max-w-3xl border-b border-border pb-10">
+          <h1 className="mt-4 font-serif text-4xl leading-[1.02] tracking-[-0.03em] text-balance sm:text-5xl lg:text-6xl">
+            My Writings          
+           </h1>
+        </header>
 
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex gap-5 overflow-x-auto pb-2"
+        className="flex flex-col lg:overflow-x-auto lg:flex-row gap-5 pb-2"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
         }}
       >
         {cards.map((post) => (
-          <Link key={post.slug} href={`/Blogs/${post.slug}`} className="group block w-[220px] min-w-[220px] flex-none cursor-pointer">
+          <Link key={post.slug} href={`/Blogs/${post.slug}`} className="group block w-full lg:w-[220px] lg:min-w-[220px] lg:flex-none cursor-pointer">
             <article className="rounded-sm">
               <div
                 className="relative mb-3 aspect-[4/5] w-full overflow-hidden rounded-sm"

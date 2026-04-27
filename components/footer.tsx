@@ -66,8 +66,31 @@ export function Footer({
 
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.05]" />
       <div className="relative mx-auto max-w-7xl px-6 py-1 lg:px-8 lg:py-6">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] lg:gap-8">
-          <div className="space-y-3">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] lg:gap-8">
+          {/* Signatures - shown first on mobile, right on desktop */}
+          <div className="flex lg:order-2 justify-start py-2 lg:justify-end lg:py-4">
+            <div className="flex w-full flex-col gap-3">
+              <Image
+                src={ananySignature}
+                alt="Anany signature"
+                width={1040}
+                height={360}
+                className="h-auto w-full object-contain"
+                priority={false}
+              />
+              <Image
+                src={mishraSignature}
+                alt="Mishra signature"
+                width={1040}
+                height={360}
+                className="h-auto w-full object-contain"
+                priority={false}
+              />
+            </div>
+          </div>
+
+          {/* Social links - shown second on mobile, left on desktop */}
+          <div className="space-y-3 lg:order-1">
             {links.map((link, index) => (
               <motion.a
                 key={link.label}
@@ -88,27 +111,6 @@ export function Footer({
                 <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-foreground/55 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
               </motion.a>
             ))}
-          </div>
-
-          <div className="flex justify-start py-2 lg:justify-end lg:py-4">
-            <div className="flex w-full flex-col gap-3">
-              <Image
-                src={ananySignature}
-                alt="Anany signature"
-                width={1040}
-                height={360}
-                className="h-auto w-full object-contain"
-                priority={false}
-              />
-              <Image
-                src={mishraSignature}
-                alt="Mishra signature"
-                width={1040}
-                height={360}
-                className="h-auto w-full object-contain"
-                priority={false}
-              />
-            </div>
           </div>
         </div>
       </div>
